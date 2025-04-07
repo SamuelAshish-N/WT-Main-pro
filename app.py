@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.secret_key = "your_secret_key"
 
 # MongoDB connection
-client = MongoClient("mongodb://localhost:27017/")
+client = MongoClient("mongodb+srv://samuelashishn:s123@recipehub.fodgz74.mongodb.net/?retryWrites=true&w=majority&appName=Recipehub")
 db = client["recipe_db"]
 users_collection = db["users"]
 recipes_collection = db["recipes"]
