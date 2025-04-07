@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Recipes</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="logo">🍽️ Recipe Hub</div>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/add-recipe">Add Recipe</a>
+        <a href="/favorites">Favorites</a>
+        <a href="/my-recipes">My Recipes</a>
+        <a href="/logout">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>My Recipes</h2>
+    
+    {% if recipes %}
+      <div class="card-grid">
+        {% for recipe in recipes %}
+          <div class="card">
+            <h3>{{ recipe.title }}</h3>
+            <p><strong>Category:</strong> {{ recipe.category }}</p>
+            <a href="/recipe/{{ recipe._id }}">View Recipe</a>
+            <br>
+      <br>
+          </div>
+        {% endfor %}
+      </div>
+      <br>
+      <br>
+    {% else %}
+      <p>You haven't added any recipes yet.</p>
+    {% endif %}
+  </main>
+</body>
+</html>

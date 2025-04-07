@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ recipe.title }}</title>
+    <link rel="stylesheet" href="/static/styles.css">
+
+</head>
+<body>
+    <header>
+        <div class="navbar">
+          <div class="logo">🍽️ Recipe Hub</div>
+          <nav>
+            <a href="/">Home</a>
+            <a href="/add-recipe">Add Recipe</a>
+            <a href="/favorites">Favorites</a>
+            <a href="/my-recipes">My Recipes</a>
+
+            <a href="/logout">Logout</a>
+          </nav>
+        </div>
+      </header>
+      
+    <h1>{{ recipe.title }}</h1>
+    <p><strong>Category:</strong> {{ recipe.category }}</p>
+    <p><strong>Description:</strong> {{ recipe.description }}</p>
+
+    <h3>Ingredients</h3>
+    <ul>
+        {% for ingredient in recipe.ingredients %}
+            <li>{{ ingredient }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Steps</h3>
+    <ol>
+        {% for step in recipe.steps %}
+            <li>{{ step }}</li>
+        {% endfor %}
+    </ol>
+
+    {% if is_favorite %}
+         <form action="{{ url_for('remove_favorite', recipe_id=recipe._id) }}" method="POST">
+
+            <button type="submit">❤️ Remove from Favorites</button>
+        </form>
+    {% else %}
+        <form action="{{ url_for('add_favorite', recipe_id=recipe._id|string) }}" method="POST">
+
+            <button type="submit">🤍 Add to Favorites</button>
+        </form>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('home') }}">← Back to Home</a>
+</body>
+</html>

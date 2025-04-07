@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Recipe</title>
+    <style>
+        textarea, input, select {
+            width: 300px;
+            margin: 10px;
+            padding: 8px;
+        }
+    </style>
+    <link rel="stylesheet" href="/static/styles.css">
+
+</head>
+<body>
+    <header>
+        <div class="navbar">
+          <div class="logo">🍽️ Recipe Hub</div>
+          <nav>
+            <a href="/">Home</a>
+            <a href="/add-recipe">Add Recipe</a>
+            <a href="/favorites">Favorites</a>
+            <a href="/my-recipes">My Recipes</a>
+
+            <a href="/logout">Logout</a>
+          </nav>
+        </div>
+      </header>
+      
+    <h2>Add New Recipe</h2>
+    <form method="POST">
+        <input type="text" name="title" placeholder="Recipe Title" required><br>
+        <textarea name="description" placeholder="Short Description" required></textarea><br>
+        <textarea name="ingredients" placeholder="Ingredients (one per line)" required></textarea><br>
+        <textarea name="steps" placeholder="Steps (one per line)" required></textarea><br>
+        <select name="category" required>
+            <option disabled selected>Select Category</option>
+            <option value="Breakfast">Breakfast</option>
+            <option value="Lunch">Lunch</option>
+            <option value="Dinner">Dinner</option>
+            <option value="Dessert">Dessert</option>
+        </select><br>
+        <button type="submit">Add Recipe</button>
+    </form>
+    <br>
+    <a href="{{ url_for('home') }}">← Back to Home</a>
+</body>
+</html>

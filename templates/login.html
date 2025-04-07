@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head><title>Login</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    
+      
+</head>
+<body>
+    <header>
+        <div class="navbar">
+          <div class="logo">🍽️ Recipe Hub</div>
+          <nav>
+            <a href="{{ url_for('admin_login') }}" class="btn">Admin Access</a>
+           
+        </div>
+      </header>
+      
+    <h2>Login</h2>
+    <form method="POST">
+        <input type="text" name="username" placeholder="Username" required><br>
+        <input type="password" name="password" placeholder="Password" required><br>
+        <button type="submit">Login</button>
+    </form>
+    <a href="{{ url_for('register') }}">Don't have an account? Register</a>
+    
+
+    <script>
+      window.addEventListener('DOMContentLoaded', function () {
+        const params = new URLSearchParams(window.location.search);
+        const message = params.get('message');
+        const error = params.get('error');
+    
+        if (message) {
+          const div = document.createElement('div');
+          div.className = 'alert success';
+          div.textContent = message;
+          document.body.prepend(div);
+        }
+    
+        if (error) {
+          const div = document.createElement('div');
+          div.className = 'alert error';
+          div.textContent = error;
+          document.body.prepend(div);
+        }
+        setTimeout(() => {
+  const alerts = document.querySelectorAll('.alert');
+  alerts.forEach(el => el.remove());
+}, 4000); // hides after 4 seconds
+      });
+      
+    </script>
+    
+    
+</body>
+</html>

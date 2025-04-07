@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <style>
+    th, td {
+    border: 1px solid #000000;
+    padding: 8px 12px;
+    text-align: left;
+    vertical-align: top;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>All Recipes by Users</h2>
+    <table border="1" cellpadding="20" cellspacing="1">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Description</th>
+          <th>Posted By</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for recipe in recipes %}
+        <tr>
+          <td>{{ recipe.title }}</td>
+          <td>{{ recipe.category }}</td>
+          <td>{{ recipe.description }}</td>
+          <td>{{ recipe.username }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <br>
+    <a href="{{ url_for('login') }}">Back to Login</a>
+  </div>
+</body>
+</html>

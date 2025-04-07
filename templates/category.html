@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ category }} Recipes</title>
+    <link rel="stylesheet" href="/static/styles.css">
+
+</head>
+<body>
+    <header>
+        <div class="navbar">
+          <div class="logo">🍽️ Recipe Hub</div>
+          <nav>
+            <a href="/">Home</a>
+            <a href="/add-recipe">Add Recipe</a>
+            <a href="/favorites">Favorites</a>
+            <a href="/my-recipes">My Recipes</a>
+
+            <a href="/logout">Logout</a>
+          </nav>
+        </div>
+      </header>
+      
+    <h1>{{ category }} Recipes</h1>
+    {% if recipes %}
+        <ul>
+        {% for recipe in recipes %}
+            <li>
+                <a href="{{ url_for('view_recipe', recipe_id=recipe['_id']) }}">
+                    {{ recipe['title'] }}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No recipes found in this category.</p>
+    {% endif %}
+    <a href="{{ url_for('home') }}">← Back to Home</a>
+</body>
+</html>

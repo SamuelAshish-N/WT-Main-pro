@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Favorite Recipes</title>
+    <link rel="stylesheet" href="/static/styles.css">
+
+</head>
+<body>
+    <header>
+        <div class="navbar">
+          <div class="logo">🍽️ Recipe Hub</div>
+          <nav>
+            <a href="/">Home</a>
+            <a href="/add-recipe">Add Recipe</a>
+            <a href="/favorites">Favorites</a>
+            <a href="/my-recipes">My Recipes</a>
+
+            <a href="/logout">Logout</a>
+          </nav>
+        </div>
+      </header>
+      
+    <h1>❤️ My Favorites</h1>
+
+    {% if recipes %}
+        <ul>
+            {% for recipe in recipes %}
+                <li>
+                    <a href="{{ url_for('view_recipe', recipe_id=recipe['_id']|string) }}">
+
+                        {{ recipe['title'] }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have no favorite recipes yet.</p>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('home') }}">← Back to Home</a>
+</body>
+</html>

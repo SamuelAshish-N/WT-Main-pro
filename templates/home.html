@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe Home</title>
+    <link rel="stylesheet" href="/static/styles.css">
+
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .category { display: inline-block; margin: 20px; padding: 20px; border: 1px solid #ccc; border-radius: 10px; cursor: pointer; }
+        .category:hover { background-color: #f0f0f0; }
+    </style>
+    
+      
+</head>
+<body>
+    <header>
+        <div class="navbar">
+          <div class="logo">🍽️ Recipe Hub</div>
+          <nav>
+            <a href="/">Home</a>
+            <a href="/add-recipe">Add Recipe</a>
+            <a href="/favorites">Favorites</a>
+            <a href="/my-recipes">My Recipes</a>
+
+            <a href="/logout">Logout</a>
+          </nav>
+        </div>
+      </header>
+      
+    <h1>Welcome, {{ current_user.username }}!</h1>
+    <h2>Select a Category</h2>
+
+    <div class="category" onclick="location.href='/category/Breakfast'">🍳 Breakfast</div>
+    <div class="category" onclick="location.href='/category/Lunch'">🥪 Lunch</div>
+    <div class="category" onclick="location.href='/category/Dinner'">🍝 Dinner</div>
+    <div class="category" onclick="location.href='/category/Dessert'">🍰 Dessert</div>
+
+    <br><br>
+    <!--<a href="{{ url_for('add_recipe') }}">➕ Add Recipe</a> |
+    <a href="{{ url_for('favorites') }}">❤️ Favorites</a> |
+    <a href="{{ url_for('logout') }}">🚪 Logout</a>-->
+
+    <script>
+      window.addEventListener('DOMContentLoaded', function () {
+        const params = new URLSearchParams(window.location.search);
+        const message = params.get('message');
+        const error = params.get('error');
+    
+        if (message) {
+          const div = document.createElement('div');
+          div.className = 'alert success';
+          div.textContent = message;
+          document.body.prepend(div);
+        }
+    
+        if (error) {
+          const div = document.createElement('div');
+          div.className = 'alert error';
+          div.textContent = error;
+          document.body.prepend(div);
+        }
+        setTimeout(() => {
+          const alerts = document.querySelectorAll('.alert');
+          alerts.forEach(el => el.remove());
+          }, 4000); // hides after 4 seconds
+      });
+    </script>
+    
+    
+</body>
+</html>
