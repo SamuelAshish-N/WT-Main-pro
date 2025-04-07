@@ -22,6 +22,11 @@
       </header>
       
     <h1>{{ recipe.title }}</h1>
+    {% if recipe.image %}
+  <img src="{{ url_for('static', filename='uploads/' + recipe.image) }}" alt="Recipe Image" style="max-width: 300px;">
+    {% else %}
+    <p><i>No image uploaded for this recipe.</i></p>
+    {% endif %}
     <p><strong>Category:</strong> {{ recipe.category }}</p>
     <p><strong>Description:</strong> {{ recipe.description }}</p>
 
@@ -50,6 +55,8 @@
             <button type="submit">🤍 Add to Favorites</button>
         </form>
     {% endif %}
+    
+
 
     <br>
     <a href="{{ url_for('home') }}">← Back to Home</a>

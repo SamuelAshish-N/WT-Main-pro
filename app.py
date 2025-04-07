@@ -1,8 +1,12 @@
+import os
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+
+from werkzeug.utils import secure_filename
+
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
@@ -24,6 +28,15 @@ class User(UserMixin):
     def __init__(self, user_data):
         self.id = str(user_data['_id'])
         self.username = user_data['username']
+
+UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -81,7 +94,7 @@ def home():
 @app.route('/category/<category_name>')
 @login_required
 def category(category_name):
-    recipes = list(recipes_collection.find({"category": category_name}))
+    recipes = list(recipes_collection.find({"category": category_name.lower()}))
     return render_template('category.html', category=category_name, recipes=recipes)
 
 
@@ -93,7 +106,15 @@ def add_recipe():
         description = request.form['description']
         ingredients = request.form['ingredients'].split('\n')
         steps = request.form['steps'].split('\n')
-        category = request.form['category']
+        category = request.form['category'].lower()
+        image_file = request.files.get('image')
+
+        image_filename = ""
+        if image_file and allowed_file(image_file.filename):
+            filename = secure_filename(image_file.filename)
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            image_file.save(image_path)
+            image_filename = filename
 
         recipe = {
             "title": title,
@@ -101,7 +122,8 @@ def add_recipe():
             "ingredients": ingredients,
             "steps": steps,
             "category": category,
-            "user_id": current_user.id
+            "user_id": current_user.id,
+            "image": image_filename
         }
 
         recipes_collection.insert_one(recipe)
@@ -109,6 +131,7 @@ def add_recipe():
         return redirect(url_for('home'))
 
     return render_template('add_recipe.html')
+
 
 
 
